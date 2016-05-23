@@ -1,0 +1,24 @@
+package main
+
+import (
+	"log"
+
+	"github.com/tenchoufansubs/go-lolicon"
+
+	_ "github.com/tenchoufansubs/go-lolicon/plugins/commands"
+
+	_ "github.com/tenchoufansubs/go-lolicon/plugins/images"
+)
+
+var (
+	plugins []lolicon.Plugin
+)
+
+func initPlugins() {
+	plugins = lolicon.Plugins()
+
+	for _, p := range plugins {
+		log.Printf("setup: %s", p.Id())
+		p.Setup(cache)
+	}
+}
