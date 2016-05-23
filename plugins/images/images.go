@@ -37,7 +37,7 @@ func (p *ImagesPlugin) Setup(cache storage.Driver) (err error) {
 }
 
 func (p *ImagesPlugin) Open() (err error) {
-	err = storage.GetJSON(p.cache, string(p.Id()), &p)
+	err = storage.GetJSON(p.cache, string(p.Id()), p)
 	if err != nil {
 		return
 	}

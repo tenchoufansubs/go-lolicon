@@ -38,7 +38,7 @@ func (p *CommandsPlugin) Setup(cache storage.Driver) (err error) {
 }
 
 func (p *CommandsPlugin) Open() (err error) {
-	err = storage.GetJSON(p.cache, string(p.Id()), &p)
+	err = storage.GetJSON(p.cache, string(p.Id()), p)
 	if err != nil {
 		return
 	}
