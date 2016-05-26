@@ -63,16 +63,17 @@ func (p *KanjiPlugin) HandleMessage(msg *lolicon.Message) (done bool, err error)
 	messageParts := make([]string, 0)
 
 	for _, result := range results {
-		if result.Kanji == nil {
+		k := result.Kanji
+
+		if k == nil || k.Character == "" || k.RawStrokes == "" || k.Meanings == "" {
 			continue
 		}
-
-		k := result.Kanji
 
 		messageParts = append(messageParts, fmt.Sprintf("* %s (%s) -- %s", k.Character, k.RawStrokes, k.Meanings))
 	}
 
 	if len(messageParts) == 0 {
+		_, err = msg.Raw.Session.ChannelMessageSend(msg.ChannelId, fmt.Sprintf("No results for %#v", msg.Trailing))
 		return
 	}
 
