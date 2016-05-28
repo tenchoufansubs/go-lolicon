@@ -69,7 +69,7 @@ func (p *KanjiPlugin) HandleMessage(msg *lolicon.Message) (done bool, err error)
 			continue
 		}
 
-		messageParts = append(messageParts, fmt.Sprintf("* %s (%s) -- %s", k.Character, k.RawStrokes, k.Meanings))
+		messageParts = append(messageParts, fmt.Sprintf("%s (%s) -- %s", k.Character, k.RawStrokes, k.Meanings))
 	}
 
 	if len(messageParts) == 0 {
