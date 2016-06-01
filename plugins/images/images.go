@@ -8,6 +8,8 @@ import (
 
 	"github.com/tenchoufansubs/go-lolicon"
 	"github.com/tenchoufansubs/go-lolicon/storage"
+
+	"github.com/bwmarrin/discordgo"
 )
 
 func init() {
@@ -36,7 +38,7 @@ func (p *ImagesPlugin) Setup(cache storage.Driver) (err error) {
 	return
 }
 
-func (p *ImagesPlugin) Open() (err error) {
+func (p *ImagesPlugin) Open(s *discordgo.Session) (err error) {
 	err = storage.GetJSON(p.cache, string(p.Id()), p)
 	if err != nil {
 		return

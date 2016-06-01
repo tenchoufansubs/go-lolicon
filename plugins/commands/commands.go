@@ -5,6 +5,8 @@ import (
 
 	"github.com/tenchoufansubs/go-lolicon"
 	"github.com/tenchoufansubs/go-lolicon/storage"
+
+	"github.com/bwmarrin/discordgo"
 )
 
 const DefaultPrefix = "!"
@@ -37,7 +39,7 @@ func (p *CommandsPlugin) Setup(cache storage.Driver) (err error) {
 	return
 }
 
-func (p *CommandsPlugin) Open() (err error) {
+func (p *CommandsPlugin) Open(s *discordgo.Session) (err error) {
 	err = storage.GetJSON(p.cache, string(p.Id()), p)
 	if err != nil {
 		return

@@ -4,6 +4,8 @@ import (
 	"fmt"
 
 	"github.com/tenchoufansubs/go-lolicon/storage"
+
+	"github.com/bwmarrin/discordgo"
 )
 
 type PluginId string
@@ -26,7 +28,7 @@ type Plugin interface {
 
 	// Open is called when the connection to Discord has been
 	// successfully established.
-	Open() (err error)
+	Open(s *discordgo.Session) (err error)
 
 	// Close is called after the connection to Discord has been closed.
 	Close() (err error)

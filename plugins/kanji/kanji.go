@@ -7,6 +7,7 @@ import (
 	"github.com/tenchoufansubs/go-lolicon"
 	"github.com/tenchoufansubs/go-lolicon/storage"
 
+	"github.com/bwmarrin/discordgo"
 	"github.com/noisypixy/go-jisho"
 )
 
@@ -33,7 +34,7 @@ func (p *KanjiPlugin) Setup(cache storage.Driver) (err error) {
 	return
 }
 
-func (p *KanjiPlugin) Open() (err error) {
+func (p *KanjiPlugin) Open(s *discordgo.Session) (err error) {
 	return
 }
 

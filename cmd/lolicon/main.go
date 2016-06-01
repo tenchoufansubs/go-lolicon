@@ -100,7 +100,7 @@ func onReady(s *discordgo.Session, ready *discordgo.Ready) {
 	for _, p := range plugins {
 		log.Printf("start: %s", p.Id())
 
-		err = p.Open()
+		err = p.Open(s)
 		if err != nil {
 			log.Print(err.Error())
 			return
