@@ -3,6 +3,7 @@ package kudos
 import (
 	"errors"
 	"fmt"
+	"os"
 
 	"github.com/tenchoufansubs/go-lolicon"
 	"github.com/tenchoufansubs/go-lolicon/storage"
@@ -25,7 +26,10 @@ type KudosPlugin struct {
 	cache  storage.Driver `json:"-"`
 	selfId string         `json:"-"`
 
-	Kudos map[string]int `json:"kudos"`
+	LogFile string         `json:"log_file"`
+	Kudos   map[string]int `json:"kudos"`
+
+	logf *os.File `json:"-"`
 }
 
 func (p *KudosPlugin) Id() lolicon.PluginId {
@@ -45,6 +49,10 @@ func (p *KudosPlugin) Setup(cache storage.Driver) (err error) {
 		return
 	}
 
+	if p.LogFile == "" {
+		p.LogFile = "kudos.log"
+	}
+
 	return
 }
 
@@ -58,10 +66,16 @@ func (p *KudosPlugin) Open(s *discordgo.Session) (err error) {
 		p.Kudos = make(map[string]int)
 	}
 
+	p.logf, err = os.OpenFile(p.LogFile, os.O_CREATE|os.O_APPEND, 0600)
+	if err != nil {
+		return
+	}
+
 	return
 }
 
 func (p *KudosPlugin) Close() (err error) {
+	_ = p.logf.Close()
 	err = storage.SetJSON(p.cache, string(p.Id()), p)
 	return
 }
@@ -94,7 +108,29 @@ func (p *KudosPlugin) HandleMessage(msg *lolicon.Message) (done bool, err error)
 
 	done = true
 
+	var (
+		channel   *discordgo.Channel
+		guild     *discordgo.Guild
+		whoSaidIt *discordgo.User
+	)
+
 	user := mentions[0]
+
+	channel, err = msg.Raw.Session.Channel(msg.ChannelId)
+	if err != nil {
+		return
+	}
+
+	guild, err = msg.Raw.Session.Guild(channel.GuildID)
+	if err != nil {
+		return
+	}
+
+	whoSaidIt, err = msg.Raw.Session.User(msg.UserId)
+	if err != nil {
+		return
+	}
+
 	message := ""
 
 	switch msg.Command {
@@ -116,6 +152,8 @@ func (p *KudosPlugin) HandleMessage(msg *lolicon.Message) (done bool, err error)
 			message += "(Come on, you can do it)"
 		}
 
+		_, err = fmt.Fprintf(p.logf, "[%s] [%s|%s] [%s|#%s] -- %s <%s> sent +1 kudo to %s <%s>", msg.Date, guild.ID, guild.Name, channel.ID, channel.Name, whoSaidIt.Username, whoSaidIt.ID, user.Username, user.ID)
+
 		break
 
 	case "damedesu":
@@ -134,6 +172,8 @@ func (p *KudosPlugin) HandleMessage(msg *lolicon.Message) (done bool, err error)
 			message += " "
 			message += "(You don't learn, do you?)"
 		}
+
+		_, err = fmt.Fprintf(p.logf, "[%s] [%s|%s] [%s|#%s] -- %s <%s> took 1 kudo from %s <%s>", msg.Date, guild.ID, guild.Name, channel.ID, channel.Name, whoSaidIt.Username, whoSaidIt.ID, user.Username, user.ID)
 
 		break
 
