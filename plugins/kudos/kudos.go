@@ -66,7 +66,7 @@ func (p *KudosPlugin) Open(s *discordgo.Session) (err error) {
 		p.Kudos = make(map[string]int)
 	}
 
-	p.logf, err = os.OpenFile(p.LogFile, os.O_CREATE|os.O_APPEND, 0600)
+	p.logf, err = os.OpenFile(p.LogFile, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0600)
 	if err != nil {
 		return
 	}
