@@ -20,13 +20,20 @@ func init() {
 	lolicon.RegisterPlugin(plugin)
 }
 
-type IdPlugin struct{}
+type IdPlugin struct {
+	selfId string `json:"-"`
+}
 
 func (p *IdPlugin) Id() lolicon.PluginId {
 	return lolicon.PluginId("id")
 }
 
 func (p *IdPlugin) Setup(cache storage.Driver) (err error) {
+	p.selfId, err = cache.Get("userId")
+	if err != nil {
+		return
+	}
+
 	return
 }
 
@@ -46,9 +53,30 @@ func (p *IdPlugin) HandleMessage(msg *lolicon.Message) (done bool, err error) {
 		return
 	}
 
-	done = true
+	var (
+		message string
+	)
 
-	message := fmt.Sprintf("<@%s> Your ID is `%s`. You're welcome.", msg.UserId, msg.UserId)
+	mentions := make([]*discordgo.User, 0)
+	for _, user := range msg.Raw.Event.Mentions {
+		if user.ID == p.selfId {
+			continue
+		}
+
+		mentions = append(mentions, user)
+	}
+
+	if len(mentions) > 1 {
+		return
+	}
+
+	if len(mentions) == 0 {
+		message = fmt.Sprintf("<@%s> Your ID is `%s`. You're welcome.", msg.UserId, msg.UserId)
+	} else {
+		message = fmt.Sprintf("The ID of <@%s> is `%s`. You're welcome.", mentions[0], msg.UserId)
+	}
+
+	done = true
 
 	_, err = msg.Raw.Session.ChannelMessageSend(msg.ChannelId, message)
 
