@@ -3,13 +3,11 @@ package kudos
 import (
 	"errors"
 	"fmt"
-	"strings"
 
 	"github.com/tenchoufansubs/go-lolicon"
 	"github.com/tenchoufansubs/go-lolicon/storage"
 
 	"github.com/bwmarrin/discordgo"
-	"github.com/noisypixy/go-jisho"
 )
 
 func init() {
@@ -57,7 +55,7 @@ func (p *KudosPlugin) Open(s *discordgo.Session) (err error) {
 	}
 
 	if p.Kudos == nil {
-		p = make(map[string]int)
+		p.Kudos = make(map[string]int)
 	}
 
 	return

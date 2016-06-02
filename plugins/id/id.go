@@ -2,13 +2,11 @@ package id
 
 import (
 	"fmt"
-	"strings"
 
 	"github.com/tenchoufansubs/go-lolicon"
 	"github.com/tenchoufansubs/go-lolicon/storage"
 
 	"github.com/bwmarrin/discordgo"
-	"github.com/noisypixy/go-jisho"
 )
 
 func init() {
