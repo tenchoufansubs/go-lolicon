@@ -135,6 +135,7 @@ func onMessageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 		Date:      ts,
 		Content:   m.Content,
 		ChannelId: m.ChannelID,
+		UserId:    m.Author.ID,
 
 		Raw: &lolicon.RawMessageData{
 			Session: s,

@@ -27,6 +27,8 @@ type CommandsPlugin struct {
 
 	UserId string `json:"-"`
 	Prefix string `json:"prefix"`
+
+	Admins []string `json:"admins"`
 }
 
 func (p *CommandsPlugin) Id() lolicon.PluginId {
@@ -57,6 +59,10 @@ func (p *CommandsPlugin) Open(s *discordgo.Session) (err error) {
 		p.Prefix = DefaultPrefix
 	}
 
+	if p.Admins == nil {
+		p.Admins = make([]string, 0)
+	}
+
 	return
 }
 
@@ -80,6 +86,14 @@ func (p *CommandsPlugin) HandleMessage(msg *lolicon.Message) (done bool, err err
 
 	msg.Command = strings.TrimSpace(msg.Command)
 	msg.Trailing = strings.TrimSpace(msg.Trailing)
+
+	msg.IsAdmin = false
+	for _, adminId := range p.Admins {
+		if msg.UserId == adminId {
+			msg.IsAdmin = true
+			break
+		}
+	}
 
 	return
 }
