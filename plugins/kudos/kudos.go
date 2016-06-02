@@ -152,7 +152,7 @@ func (p *KudosPlugin) HandleMessage(msg *lolicon.Message) (done bool, err error)
 			message += "(Come on, you can do it)"
 		}
 
-		_, err = fmt.Fprintf(p.logf, "[%s] [%s|%s] [%s|#%s] -- %s <%s> sent +1 kudo to %s <%s>", msg.Date, guild.ID, guild.Name, channel.ID, channel.Name, whoSaidIt.Username, whoSaidIt.ID, user.Username, user.ID)
+		_, err = fmt.Fprintf(p.logf, "[%s] [%s|%s] [%s|#%s] -- %s <%s> sent +1 kudo to %s <%s>\n", msg.Date, guild.ID, guild.Name, channel.ID, channel.Name, whoSaidIt.Username, whoSaidIt.ID, user.Username, user.ID)
 
 		break
 
@@ -173,7 +173,7 @@ func (p *KudosPlugin) HandleMessage(msg *lolicon.Message) (done bool, err error)
 			message += "(You don't learn, do you?)"
 		}
 
-		_, err = fmt.Fprintf(p.logf, "[%s] [%s|%s] [%s|#%s] -- %s <%s> took 1 kudo from %s <%s>", msg.Date, guild.ID, guild.Name, channel.ID, channel.Name, whoSaidIt.Username, whoSaidIt.ID, user.Username, user.ID)
+		_, err = fmt.Fprintf(p.logf, "[%s] [%s|%s] [%s|#%s] -- %s <%s> took 1 kudo from %s <%s>\n", msg.Date, guild.ID, guild.Name, channel.ID, channel.Name, whoSaidIt.Username, whoSaidIt.ID, user.Username, user.ID)
 
 		break
 
