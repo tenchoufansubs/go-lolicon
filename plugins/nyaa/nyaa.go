@@ -83,6 +83,11 @@ func (p *NyaaPlugin) Open(s *discordgo.Session) (err error) {
 func (p *NyaaPlugin) Close() (err error) {
 	close(p.chInterrupt)
 
+	err = p.save()
+	return
+}
+
+func (p *NyaaPlugin) save() (err error) {
 	err = storage.SetJSON(p.cache, string(p.Id()), p)
 	return
 }
@@ -221,6 +226,8 @@ func (p *NyaaPlugin) update() (err error) {
 		// Save changes.
 		p.Torrents[id] = torrent
 	}
+
+	err = p.save()
 
 	return
 }
