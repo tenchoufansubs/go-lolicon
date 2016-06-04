@@ -199,7 +199,7 @@ func (p *NyaaPlugin) update() (err error) {
 	for id, torrent := range torrents {
 		// If the torrent is "new", we won't do anything with it
 		// until next check.
-		if _, ok := p.Torrents[id]; ok {
+		if _, ok := p.Torrents[id]; !ok {
 			p.Torrents[id] = torrent
 			continue
 		}
