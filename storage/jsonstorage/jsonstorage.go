@@ -7,11 +7,14 @@ import (
 	"net/url"
 	"os"
 	"strings"
+	"sync"
 
 	"github.com/tenchoufansubs/go-lolicon/storage"
 )
 
 type JSONStorage struct {
+	*sync.RWMutex
+
 	file string
 	data map[string]interface{}
 }
@@ -34,6 +37,9 @@ func (s *JSONStorage) Open(uri string) (err error) {
 
 	s.file = uri
 	s.data = make(map[string]interface{})
+
+	s.Lock()
+	defer s.Unlock()
 
 	f, err = os.Open(s.file)
 	if err != nil {
@@ -76,6 +82,9 @@ func (s *JSONStorage) Flush() (err error) {
 		f *os.File
 	)
 
+	s.Lock()
+	defer s.Unlock()
+
 	rawData, err = json.MarshalIndent(s.data, "", "  ")
 	if err != nil {
 		return
@@ -104,6 +113,9 @@ func (s *JSONStorage) Get(key string) (value string, err error) {
 		rawValue interface{}
 	)
 
+	s.RLock()
+	defer s.RUnlock()
+
 	rawValue, ok = s.data[key]
 	if !ok {
 		err = storage.ErrNotFound
@@ -120,6 +132,9 @@ func (s *JSONStorage) Get(key string) (value string, err error) {
 }
 
 func (s *JSONStorage) Set(key, value string) (err error) {
+	s.Lock()
+	defer s.Unlock()
+
 	s.data[key] = value
 
 	err = s.Flush()
@@ -127,6 +142,9 @@ func (s *JSONStorage) Set(key, value string) (err error) {
 }
 
 func (s *JSONStorage) GetJSON(key string, v interface{}) (err error) {
+	s.RLock()
+	defer s.RUnlock()
+
 	var (
 		rawData []byte
 	)
@@ -141,14 +159,22 @@ func (s *JSONStorage) GetJSON(key string, v interface{}) (err error) {
 }
 
 func (s *JSONStorage) SetJSON(key string, value interface{}) (err error) {
+	s.Lock()
+
 	s.data[key] = value
+
+	s.Unlock()
 
 	err = s.Flush()
 	return
 }
 
 func (s *JSONStorage) Delete(key string) (err error) {
+	s.Lock()
+
 	delete(s.data, key)
+
+	s.Unlock()
 
 	err = s.Flush()
 	return
