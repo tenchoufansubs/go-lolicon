@@ -104,11 +104,13 @@ func (p *NyaaPlugin) HandleMessage(msg *lolicon.Message) (done bool, err error) 
 
 func (p *NyaaPlugin) watch() {
 	for {
+		_ = p.update()
+
 		select {
 		case <-p.chInterrupt:
 			return
 		case <-time.After(time.Duration(p.CheckIntervalMinutes) * time.Minute):
-			_ = p.update()
+			continue
 		}
 	}
 }
