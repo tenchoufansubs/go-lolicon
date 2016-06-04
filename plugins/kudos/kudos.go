@@ -142,7 +142,7 @@ func (p *KudosPlugin) HandleMessage(msg *lolicon.Message) (done bool, err error)
 			kudosStr = "kudos"
 		}
 
-		message = fmt.Sprintf("<@%s> now has %d %s!", user.ID, p.Kudos[user.ID], kudosStr)
+		message = fmt.Sprintf("<@%s> now has **%d** %s!", user.ID, p.Kudos[user.ID], kudosStr)
 
 		if p.Kudos[user.ID] == 0 {
 			message += " "
@@ -164,7 +164,7 @@ func (p *KudosPlugin) HandleMessage(msg *lolicon.Message) (done bool, err error)
 			kudosStr = "kudos"
 		}
 
-		message = fmt.Sprintf("Dame desu, <@%s>. You now have %d %s.", user.ID, p.Kudos[user.ID], kudosStr)
+		message = fmt.Sprintf("Dame desu, <@%s>. You now have **%d** %s.", user.ID, p.Kudos[user.ID], kudosStr)
 		if p.Kudos[user.ID] == 0 {
 			message += " "
 			message += "(All that effort went to waste)"
