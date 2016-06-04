@@ -212,7 +212,7 @@ func (p *NyaaPlugin) update() (err error) {
 			b := math.Floor(dlCur / step)
 
 			if b > a {
-				milestone := math.Floor(b * step)
+				milestone := int(math.Floor(b * step))
 				message := fmt.Sprintf("%s has reached %d downloads! %s", torrent.Title, milestone, torrent.URL)
 				_, _ = p.session.ChannelMessageSend(p.NotificationsChannelId, message)
 			}
