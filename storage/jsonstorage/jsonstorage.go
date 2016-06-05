@@ -13,7 +13,7 @@ import (
 )
 
 type JSONStorage struct {
-	*sync.RWMutex
+	sync.RWMutex
 
 	file string
 	data map[string]interface{}
