@@ -7,6 +7,7 @@ import (
 
 	_ "github.com/tenchoufansubs/go-lolicon/plugins/commands"
 
+	_ "github.com/tenchoufansubs/go-lolicon/plugins/booru"
 	_ "github.com/tenchoufansubs/go-lolicon/plugins/id"
 	_ "github.com/tenchoufansubs/go-lolicon/plugins/kanji"
 	_ "github.com/tenchoufansubs/go-lolicon/plugins/kudos"
