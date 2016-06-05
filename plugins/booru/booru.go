@@ -51,6 +51,7 @@ func (p *BooruPlugin) HandleMessage(msg *lolicon.Message) (done bool, err error)
 	var (
 		parsedURL *url.URL
 		image     *booru.Image
+		req       *http.Request
 		resp      *http.Response
 	)
 
@@ -100,7 +101,13 @@ func (p *BooruPlugin) HandleMessage(msg *lolicon.Message) (done bool, err error)
 		return
 	}
 
-	resp, err = http.Get(image.URL)
+	req, err = http.NewRequest(http.MethodGet, image.URL, nil)
+	if err != nil {
+		return
+	}
+	req.Header.Set("User-Agent", "lolicon")
+
+	resp, err = http.DefaultClient.Do(req)
 	if err != nil {
 		return
 	}
