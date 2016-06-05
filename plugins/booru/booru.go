@@ -71,6 +71,10 @@ func (p *BooruPlugin) HandleMessage(msg *lolicon.Message) (done bool, err error)
 			continue
 		}
 
+		if !strings.Contains(p, "gelbooru.com") {
+			continue
+		}
+
 		parsedURL, err = url.Parse(p)
 		if err != nil {
 			continue
