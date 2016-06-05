@@ -9,7 +9,9 @@ import (
 	"github.com/tenchoufansubs/go-lolicon/storage"
 
 	"github.com/bwmarrin/discordgo"
+
 	"github.com/noisypixy/go-booru"
+	_ "github.com/noisypixy/go-booru/sources"
 )
 
 func init() {
