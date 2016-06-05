@@ -133,9 +133,10 @@ func (s *JSONStorage) Get(key string) (value string, err error) {
 
 func (s *JSONStorage) Set(key, value string) (err error) {
 	s.Lock()
-	defer s.Unlock()
 
 	s.data[key] = value
+
+	s.Unlock()
 
 	err = s.Flush()
 	return
