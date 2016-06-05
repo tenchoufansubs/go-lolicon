@@ -45,12 +45,6 @@ func (p *BooruPlugin) HandleMessage(msg *lolicon.Message) (done bool, err error)
 	if msg.Command != "" {
 		return
 	}
-	if msg.Trailing == "" {
-		return
-	}
-	if strings.HasSuffix(msg.Trailing, ".png") || strings.HasSuffix(msg.Trailing, ".jpg") || strings.HasSuffix(msg.Trailing, ".jpeg") || strings.HasSuffix(msg.Trailing, ".gif") {
-		return
-	}
 
 	var (
 		parsedURL *url.URL
@@ -58,16 +52,18 @@ func (p *BooruPlugin) HandleMessage(msg *lolicon.Message) (done bool, err error)
 		resp      *http.Response
 	)
 
-	parts := strings.Split(msg.Trailing, " ")
+	parts := strings.Split(msg.Content, " ")
 	for _, p := range parts {
 		var (
 			err error
 		)
 
-		parsedURL = nil
-
 		p = strings.TrimSpace(p)
 		if p == "" {
+			continue
+		}
+
+		if strings.HasSuffix(p, ".png") || strings.HasSuffix(p, ".jpg") || strings.HasSuffix(p, ".jpeg") || strings.HasSuffix(p, ".gif") {
 			continue
 		}
 
@@ -83,6 +79,8 @@ func (p *BooruPlugin) HandleMessage(msg *lolicon.Message) (done bool, err error)
 		if booru.Supports(parsedURL) {
 			break
 		}
+
+		parsedURL = nil
 	}
 
 	if parsedURL == nil {
