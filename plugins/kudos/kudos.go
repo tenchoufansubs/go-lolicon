@@ -39,9 +39,9 @@ func (p *KudosPlugin) Id() lolicon.PluginId {
 
 func (p *KudosPlugin) Help() map[string]string {
 	return map[string]string{
-		"kudos <user>":    "Give kudos to <user>",
-		"damedesu <user>": "Remove 1 kudo from <user>",
-		"kudos? <user>":   "Display amount of kudos received by <user>",
+		"kudos <user>":    "Give kudos to `<user>`",
+		"damedesu <user>": "Remove 1 kudo from `<user>`",
+		"kudos? <user>":   "Display amount of kudos received by `<user>`",
 	}
 }
 
