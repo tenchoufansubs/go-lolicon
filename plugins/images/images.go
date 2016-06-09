@@ -4,6 +4,7 @@ import (
 	"math/rand"
 	"os"
 	"path"
+	"strings"
 	"time"
 
 	"github.com/tenchoufansubs/go-lolicon"
@@ -18,6 +19,7 @@ func init() {
 	var (
 		_ lolicon.Plugin         = plugin
 		_ lolicon.MessageHandler = plugin
+		_ lolicon.HelpProvider   = plugin
 	)
 
 	lolicon.RegisterPlugin(plugin)
@@ -31,6 +33,35 @@ type ImagesPlugin struct {
 
 func (p *ImagesPlugin) Id() lolicon.PluginId {
 	return lolicon.PluginId("images")
+}
+
+func (p *ImagesPlugin) Help() (commands map[string]string) {
+	commands = make(map[string]string)
+
+	for _, root := range p.Directories {
+		func() {
+			d, err := os.Open(root)
+			if err != nil {
+				if os.IsNotExist(err) {
+					err = nil
+				}
+				return
+			}
+			defer d.Close()
+
+			entries, err := d.Readdirnames(-1)
+			if err != nil {
+				return
+			}
+
+			for _, entry := range entries {
+				name := strings.ToLower(entry)
+				commands[name] = "Upload image from `" + name + "` directory"
+			}
+		}()
+	}
+
+	return
 }
 
 func (p *ImagesPlugin) Setup(cache storage.Driver) (err error) {

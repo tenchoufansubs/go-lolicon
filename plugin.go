@@ -39,6 +39,11 @@ type MessageHandler interface {
 	HandleMessage(msg *Message) (done bool, err error)
 }
 
+type HelpProvider interface {
+	Plugin
+	Help() map[string]string
+}
+
 func RegisterPlugin(plugin Plugin) {
 	if plugin == nil {
 		panic("nil plugin")

@@ -30,6 +30,12 @@ func (p *KanjiPlugin) Id() lolicon.PluginId {
 	return lolicon.PluginId("kanji")
 }
 
+func (p *KanjiPlugin) Help() map[string]string {
+	return map[string]string{
+		"kanji <kanji>": "Lookup the definition for `<kanji>` in Jisho",
+	}
+}
+
 func (p *KanjiPlugin) Setup(cache storage.Driver) (err error) {
 	return
 }

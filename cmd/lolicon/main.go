@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"os/signal"
@@ -158,6 +159,35 @@ func onMessageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 			return
 		}
 		if done {
+			break
+		}
+
+		if msg.Command == "help" {
+			commands := make(map[string]string)
+			for _, p2 := range plugins {
+				helpProvider, ok := p2.(lolicon.HelpProvider)
+				if !ok {
+					continue
+				}
+
+				commandHelp := helpProvider.Help()
+				if commandHelp == nil {
+					continue
+				}
+
+				for command, helpStr := range commandHelp {
+					commands[command] = helpStr
+				}
+			}
+
+			outputStr := "```\n"
+			for command, helpStr := range commands {
+				outputStr += fmt.Sprintf("* **%s** -- %s\n", command, helpStr)
+			}
+			outputStr += "```"
+
+			_, err = s.ChannelMessageSend(msg.ChannelId, outputStr)
+
 			break
 		}
 	}

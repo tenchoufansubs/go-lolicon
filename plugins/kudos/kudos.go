@@ -17,6 +17,7 @@ func init() {
 	var (
 		_ lolicon.Plugin         = plugin
 		_ lolicon.MessageHandler = plugin
+		_ lolicon.HelpProvider   = plugin
 	)
 
 	lolicon.RegisterPlugin(plugin)
@@ -34,6 +35,14 @@ type KudosPlugin struct {
 
 func (p *KudosPlugin) Id() lolicon.PluginId {
 	return lolicon.PluginId("kudos")
+}
+
+func (p *KudosPlugin) Help() map[string]string {
+	return map[string]string{
+		"kudos <user>":    "Give kudos to <user>",
+		"damedesu <user>": "Remove 1 kudo from <user>",
+		"kudos? <user>":   "Display amount of kudos received by <user>",
+	}
 }
 
 func (p *KudosPlugin) Setup(cache storage.Driver) (err error) {
