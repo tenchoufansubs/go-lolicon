@@ -111,6 +111,9 @@ func onReady(s *discordgo.Session, ready *discordgo.Ready) {
 
 	if ready.Guilds != nil {
 		for _, g := range ready.Guilds {
+			if g.Name == "" || g.ID == "" {
+				continue
+			}
 			log.Printf("guild: %s <%s>", g.Name, g.ID)
 		}
 	}
