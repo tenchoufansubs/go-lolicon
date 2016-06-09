@@ -55,6 +55,11 @@ func (p *ImagesPlugin) Help() (commands map[string]string) {
 			}
 
 			for _, entry := range entries {
+				file, err := p.pickImageFile(entry)
+				if file == "" || err != nil {
+					continue
+				}
+
 				name := strings.ToLower(entry)
 				commands[name] = "Upload image from `" + name + "` directory"
 			}
