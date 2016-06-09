@@ -163,7 +163,7 @@ func onMessageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 		}
 
 		if msg.Command == "help" {
-			commands := make(map[string]string)
+			outputStr := ""
 			for _, p2 := range plugins {
 				helpProvider, ok := p2.(lolicon.HelpProvider)
 				if !ok {
@@ -176,15 +176,9 @@ func onMessageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 				}
 
 				for command, helpStr := range commandHelp {
-					commands[command] = helpStr
+					outputStr += fmt.Sprintf("* **%s** -- %s\n", command, helpStr)
 				}
 			}
-
-			outputStr := "```\n"
-			for command, helpStr := range commands {
-				outputStr += fmt.Sprintf("* **%s** -- %s\n", command, helpStr)
-			}
-			outputStr += "```"
 
 			_, err = s.ChannelMessageSend(msg.ChannelId, outputStr)
 
