@@ -55,6 +55,7 @@ func main() {
 	}
 
 	s.AddHandler(onMessageCreate)
+	s.AddHandler(onGuildCreate)
 	s.AddHandler(onReady)
 
 	log.Print("connect")
@@ -107,6 +108,16 @@ func onReady(s *discordgo.Session, ready *discordgo.Ready) {
 			return
 		}
 	}
+
+	if ready.Guilds != nil {
+		for _, g := range ready.Guilds {
+			log.Printf("guild: %s <%s>", g.Name, g.ID)
+		}
+	}
+}
+
+func onGuildCreate(s *discordgo.Session, g *discordgo.GuildCreate) {
+	log.Printf("joined guild: %s <%s>", g.Name, g.ID)
 }
 
 func onMessageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
