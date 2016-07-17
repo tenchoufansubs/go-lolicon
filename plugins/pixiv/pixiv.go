@@ -88,7 +88,7 @@ func (p *PixivPlugin) HandleMessage(msg *lolicon.Message) (done bool, err error)
 		return
 	}
 
-	imageURLStr := doc.Find(`meta[property="og:image"]`).First().AttrOr("content", "")
+	imageURLStr := doc.Find(`meta[property="og:image"]:not([content=""])`).First().AttrOr("content", "")
 	imageURLStr = strings.TrimSpace(imageURLStr)
 	if imageURLStr == "" {
 		return
