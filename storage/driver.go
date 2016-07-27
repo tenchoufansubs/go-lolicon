@@ -1,5 +1,6 @@
 package storage
 
+// Driver is the interface for a storage engine.
 type Driver interface {
 	Open(uri string) (err error)
 	Close() (err error)

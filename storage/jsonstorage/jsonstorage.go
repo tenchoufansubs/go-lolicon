@@ -1,3 +1,5 @@
+// Package jsonstorage implements the storage.Driver interface for persisting
+// information in JSON files.
 package jsonstorage
 
 import (
@@ -26,7 +28,7 @@ func (s *JSONStorage) Open(uri string) (err error) {
 		rawData []byte
 	)
 
-	// Convert file URI to path.
+	// Convert file uri to path.
 	if strings.HasPrefix(uri, "file://") {
 		uri = strings.TrimPrefix(uri, "file://")
 		uri, err = url.QueryUnescape(uri)

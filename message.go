@@ -6,6 +6,7 @@ import (
 	"github.com/bwmarrin/discordgo"
 )
 
+// Message is a message from Discord.
 type Message struct {
 	Date      time.Time `json:"date"`
 	Content   string    `json:"content"`
@@ -20,6 +21,8 @@ type Message struct {
 	Raw *RawMessageData `json:"raw"`
 }
 
+// RawMessageData contains the raw message received
+// from Discord.
 type RawMessageData struct {
 	Session *discordgo.Session       `json:"-"`
 	Event   *discordgo.MessageCreate `json:"event"`
