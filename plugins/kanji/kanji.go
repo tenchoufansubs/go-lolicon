@@ -22,9 +22,7 @@ func init() {
 	lolicon.RegisterPlugin(plugin)
 }
 
-type KanjiPlugin struct {
-	cache storage.Driver `json:"-"`
-}
+type KanjiPlugin struct{}
 
 func (p *KanjiPlugin) Id() lolicon.PluginId {
 	return lolicon.PluginId("kanji")
