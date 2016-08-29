@@ -16,6 +16,8 @@ import (
 	_ "github.com/tenchoufansubs/go-lolicon/plugins/sauce"
 
 	_ "github.com/tenchoufansubs/go-lolicon/plugins/images"
+
+	_ "github.com/tenchoufansubs/go-lolicon/plugins/upload"
 )
 
 var (
