@@ -102,7 +102,7 @@ func (p *SaucePlugin) HandleMessage(msg *lolicon.Message) (done bool, err error)
 					if err != nil {
 						continue
 					}
-					p := path.Base(imgURL.Path)
+					p := at.Filename
 					if strings.HasSuffix(p, ".png") || strings.HasSuffix(p, ".jpg") || strings.HasSuffix(p, ".jpeg") {
 						break
 					}
@@ -138,6 +138,9 @@ func (p *SaucePlugin) HandleMessage(msg *lolicon.Message) (done bool, err error)
 		if err != nil {
 			return
 		}
+	}
+	if imgURL == nil {
+		return
 	}
 
 	var (
