@@ -58,10 +58,6 @@ func (p *KudosPlugin) Setup(cache storage.Driver) (err error) {
 		return
 	}
 
-	if p.LogFile == "" {
-		p.LogFile = "kudos.log"
-	}
-
 	return
 }
 
@@ -73,6 +69,10 @@ func (p *KudosPlugin) Open(s *discordgo.Session) (err error) {
 
 	if p.Kudos == nil {
 		p.Kudos = make(map[string]int)
+	}
+
+	if p.LogFile == "" {
+		p.LogFile = "kudos.log"
 	}
 
 	p.logf, err = os.OpenFile(p.LogFile, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0600)
