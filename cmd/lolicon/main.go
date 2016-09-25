@@ -49,7 +49,7 @@ func main() {
 		os.Exit(1)
 	}()
 
-	s, err = discordgo.New(Token)
+	s, err = discordgo.New(fmt.Sprintf("Bot %s", Token))
 	if err != nil {
 		panic(err)
 	}
