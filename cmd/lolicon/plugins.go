@@ -8,11 +8,11 @@ import (
 	_ "github.com/tenchoufansubs/go-lolicon/plugins/commands"
 
 	_ "github.com/tenchoufansubs/go-lolicon/plugins/booru"
-	_ "github.com/tenchoufansubs/go-lolicon/plugins/id"
+	// _ "github.com/tenchoufansubs/go-lolicon/plugins/id"
 	_ "github.com/tenchoufansubs/go-lolicon/plugins/kanji"
 	_ "github.com/tenchoufansubs/go-lolicon/plugins/kudos"
-	_ "github.com/tenchoufansubs/go-lolicon/plugins/nyaa"
-	_ "github.com/tenchoufansubs/go-lolicon/plugins/pixiv"
+	// _ "github.com/tenchoufansubs/go-lolicon/plugins/nyaa"
+	// _ "github.com/tenchoufansubs/go-lolicon/plugins/pixiv"
 	_ "github.com/tenchoufansubs/go-lolicon/plugins/sauce"
 
 	_ "github.com/tenchoufansubs/go-lolicon/plugins/images"
